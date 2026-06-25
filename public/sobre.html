@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sobre - Servidor Web</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: linear-gradient(160deg, #e9ecef 0%, #f8f9fa 50%, #eef2f7 100%);
+            color: #333;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            margin: 0 auto;
+            max-width: 900px;
+            overflow: hidden;
+        }
+        .hero {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            padding: 40px 36px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2rem; margin: 0 0 10px; }
+        .hero p { margin: 0; opacity: 0.95; }
+        .content { padding: 36px; }
+        h2 {
+            border-bottom: 2px solid #e9ecef;
+            color: #1a1a2e;
+            font-size: 1.25rem;
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+        }
+        h2:first-child { margin-top: 0; }
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .badge {
+            background: #eef6ff;
+            border: 1px solid #b8daff;
+            border-radius: 20px;
+            color: #0056b3;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 14px;
+        }
+        .grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            margin-top: 16px;
+        }
+        .card {
+            background: #f8f9fb;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .card strong {
+            color: #007bff;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .tree {
+            background: #1f2933;
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-top: 12px;
+            padding: 20px;
+            white-space: pre;
+        }
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .flow-step {
+            align-items: center;
+            background: #eef6ff;
+            border: 1px solid #b8daff;
+            border-radius: 8px;
+            display: flex;
+            flex: 1;
+            font-size: 0.9rem;
+            justify-content: center;
+            min-width: 120px;
+            padding: 12px;
+            text-align: center;
+        }
+        .flow-arrow { align-self: center; color: #007bff; font-weight: bold; }
+        .headers {
+            background: #1f2933;
+            border-radius: 10px;
+            color: #f8fafc;
+            font-family: Consolas, monospace;
+            line-height: 1.8;
+            margin-top: 12px;
+            padding: 18px;
+        }
+        .status-table {
+            border-collapse: collapse;
+            margin-top: 12px;
+            width: 100%;
+        }
+        .status-table th,
+        .status-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        .status-table th { background: #f1f5f9; color: #1a1a2e; }
+        .status-200 { color: #28a745; font-weight: bold; }
+        .status-404 { color: #dc3545; font-weight: bold; }
+        .status-400 { color: #e67e22; font-weight: bold; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        code {
+            background: #f1f5f9;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 0.9em;
+            padding: 2px 6px;
+        }
+        .footer {
+            border-top: 1px solid #e9ecef;
+            margin-top: 32px;
+            padding-top: 24px;
+            text-align: center;
+        }
+        .footer a {
+            background: #007bff;
+            border-radius: 6px;
+            color: #fff;
+            display: inline-block;
+            font-weight: bold;
+            padding: 10px 24px;
+            text-decoration: none;
+        }
+        .footer a:hover { background: #0056b3; }
+        .demo-box {
+            background: #f8f9fb;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-top: 12px;
+            padding: 18px;
+        }
+        .demo-btn {
+            background: #e67e22;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 10px 18px;
+        }
+        .demo-btn:hover { background: #cf6d17; }
+        .demo-hint {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 12px 0 0;
+        }
+        .demo-output {
+            background: #1f2933;
+            border-radius: 8px;
+            color: #a8e6a3;
+            font-family: Consolas, monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-top: 14px;
+            max-height: 280px;
+            overflow: auto;
+            padding: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Servidor Web Multithread</h1>
+            <p>Trabalho academico de Redes de Computadores &mdash; implementacao em Python com sockets TCP e threads</p>
+            <div class="badge-row">
+                <span class="badge">Python 3</span>
+                <span class="badge">Socket TCP</span>
+                <span class="badge">HTTP/1.1</span>
+                <span class="badge">Threading</span>
+                <span class="badge">Porta 8080</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>O que e o projeto?</h2>
+            <p>
+                Um servidor web funcional que recebe requisicoes de multiplos clientes ao mesmo tempo,
+                interpreta o protocolo HTTP na camada de aplicacao e entrega paginas HTML armazenadas
+                localmente. Toda a implementacao usa apenas a biblioteca padrao do Python
+                (<code>socket</code> e <code>threading</code>), sem frameworks externos.
+            </p>
+
+            <h2>Arquitetura do sistema</h2>
+            <div class="flow">
+                <div class="flow-step">Cliente<br><small>Navegador ou script</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">TCP :8080<br><small>Socket + Thread</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">HTTP GET<br><small>Parse da requisicao</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">public/<br><small>Arquivo HTML</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Resposta HTTP<br><small>200 / 404 / 400</small></div>
+            </div>
+
+            <h2>Estrutura de pastas</h2>
+            <div class="tree">ServidorWeb/
+├── server.py          &larr; Servidor HTTP multithread
+├── public/            &larr; Paginas servidas ao cliente
+│   ├── index.html
+│   └── sobre.html
+├── templates/         &larr; Pagina de erro (automatica)
+│   └── 404.html
+├── tests/
+│   └── test_server.py &larr; Testes automatizados
+└── scripts/
+    └── client.py      &larr; Cliente concorrente com validacao</div>
+
+            <h2>Funcionalidades implementadas</h2>
+            <div class="grid">
+                <div class="card">
+                    <strong>Comunicacao TCP</strong>
+                    Servidor escuta em <code>127.0.0.1:8080</code> e aceita conexoes via socket.
+                </div>
+                <div class="card">
+                    <strong>Protocolo HTTP</strong>
+                    Interpreta requisicoes <code>GET /caminho HTTP/1.1</code> e monta respostas completas.
+                </div>
+                <div class="card">
+                    <strong>Multithread</strong>
+                    Cada cliente e atendido em uma thread separada, sem bloquear os demais.
+                </div>
+                <div class="card">
+                    <strong>Arquivos estaticos</strong>
+                    Paginas HTML sao lidas de <code>public/</code> e enviadas com cabecalhos corretos.
+                </div>
+                <div class="card">
+                    <strong>Erro automatico</strong>
+                    Arquivos inexistentes e metodos invalidos exibem <code>templates/404.html</code>.
+                </div>
+                <div class="card">
+                    <strong>Testes</strong>
+                    Suite automatizada e cliente concorrente validam status, cabecalhos e corpo.
+                </div>
+            </div>
+
+            <h2>Respostas HTTP</h2>
+            <p>Todas as respostas incluem cabecalhos padronizados para o cliente interpretar corretamente o conteudo:</p>
+            <div class="headers">
+                HTTP/1.1 200 OK<br>
+                Content-Type: text/html; charset=utf-8<br>
+                Content-Length: [tamanho em bytes]<br>
+                Connection: close
+            </div>
+
+            <table class="status-table">
+                <thead>
+                    <tr>
+                        <th>Situacao</th>
+                        <th>Status HTTP</th>
+                        <th>Comportamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Arquivo encontrado em <code>public/</code></td>
+                        <td class="status-200">200 OK</td>
+                        <td>Envia o conteudo HTML da pagina solicitada</td>
+                    </tr>
+                    <tr>
+                        <td>Arquivo inexistente ou rota bloqueada</td>
+                        <td class="status-404">404 Not Found</td>
+                        <td>Serve automaticamente <code>templates/404.html</code></td>
+                    </tr>
+                    <tr>
+                        <td>Metodo diferente de GET (ex: POST)</td>
+                        <td class="status-400">400 Bad Request</td>
+                        <td>Serve a pagina de erro com status 400</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Demonstracao ao vivo — POST invalido</h2>
+            <div class="demo-box">
+                <p>
+                    Clique no botao abaixo para enviar <code>POST /index.html</code> ao servidor.
+                    O resultado aparece no <strong>console do navegador</strong> (F12) e na tela.
+                </p>
+                <button class="demo-btn" type="button" id="btn-test-post">Testar POST /index.html</button>
+                <p class="demo-hint">Abra o DevTools (F12) &rarr; Console para ver os <code>console.log</code>.</p>
+                <pre class="demo-output" id="demo-output">Aguardando teste...</pre>
+            </div>
+
+            <h2>Relacao com Redes de Computadores</h2>
+            <ul>
+                <li><strong>Camada de aplicacao:</strong> protocolo HTTP simplificado (metodo GET, status line, cabecalhos e corpo).</li>
+                <li><strong>Camada de transporte:</strong> comunicacao confiavel via TCP com sockets como interface entre aplicacao e rede.</li>
+                <li><strong>Concorrencia:</strong> threads permitem atendimento paralelo, simulando o comportamento de servidores reais.</li>
+                <li><strong>Modelo cliente-servidor:</strong> o navegador ou <code>scripts/client.py</code> atuam como clientes; <code>server.py</code> centraliza o atendimento.</li>
+            </ul>
+
+            <h2>Como executar</h2>
+            <div class="grid">
+                <div class="card">
+                    <strong>1. Iniciar o servidor</strong>
+                    <code>python server.py</code>
+                </div>
+                <div class="card">
+                    <strong>2. Testes automatizados</strong>
+                    <code>python tests/test_server.py</code>
+                </div>
+                <div class="card">
+                    <strong>3. Cliente concorrente</strong>
+                    <code>python scripts/client.py</code>
+                </div>
+            </div>
+
+            <div class="footer">
+                <a href="/">Voltar para a Pagina Inicial</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function appendOutput(lines) {
+            const output = document.getElementById('demo-output');
+            output.textContent = lines.join('\n');
+        }
+
+        function testPostRequest() {
+            appendOutput(['Enviando POST /index.html...']);
+
+            fetch('/index.html', { method: 'POST' })
+                .then(function (response) {
+                    console.log('Status:', response.status);
+                    console.log('Status text:', response.statusText);
+                    console.log('Headers:', [...response.headers.entries()]);
+
+                    const lines = [
+                        'Status: ' + response.status,
+                        'Status text: ' + response.statusText,
+                        'Headers:',
+                        ...[...response.headers.entries()].map(function (entry) {
+                            return '  ' + entry[0] + ': ' + entry[1];
+                        }),
+                    ];
+
+                    return response.text().then(function (body) {
+                        console.log('Body:', body);
+                        lines.push('', 'Body (primeiros 300 caracteres):', body.slice(0, 300));
+                        appendOutput(lines);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Erro na requisicao:', error);
+                    appendOutput(['Erro: ' + error.message]);
+                });
+        }
+
+        document.getElementById('btn-test-post').addEventListener('click', testPostRequest);
+    </script>
+</body>
+</html>

@@ -12,9 +12,26 @@ De acordo com a especificação (edital do trabalho), as seguintes etapas foram 
 
 1. **Comunicação Básica Cliente/Servidor**: Inicialmente, a base foi construída utilizando sockets TCP no Python para garantir o recebimento e o envio de mensagens (bytes) através da rede.
 2. **Protocolo de Comunicação Simples**: O servidor foi programado para entender a primeira linha de uma requisição HTTP, extraindo o comando `GET nome_arquivo` (ex: `GET /index.html`).
-3. **Serviço de Arquivos Locais**: Após receber a requisição de um arquivo, o servidor localiza a respectiva página no seu diretório (`index.html`, `sobre.html`), faz a leitura em disco e devolve o conteúdo ao cliente (junto com o cabeçalho de sucesso `200 OK`). Caso não ache o arquivo, devolve uma página de erro customizada (`404 Not Found`).
+3. **Serviço de Arquivos Locais**: Após receber a requisição de um arquivo, o servidor localiza a respectiva página em `public/` (`index.html`, `sobre.html`), faz a leitura em disco e devolve o conteúdo ao cliente (junto com o cabeçalho de sucesso `200 OK`). Caso não ache o arquivo, devolve automaticamente a página de erro em `templates/404.html` (`404 Not Found`).
 4. **Múltiplos Clientes Simultâneos (Threads)**: O servidor foi adaptado utilizando a biblioteca `threading`. Cada nova conexão recebida é delegada a uma nova thread, permitindo que dezenas de clientes façam requisições ao mesmo tempo sem que o servidor trave esperando o término de um para atender o outro.
-5. **Testes do Sistema**: Foi desenvolvido um script de testes (`client.py`) que simula a conexão assíncrona de 10 clientes simultâneos acessando páginas diferentes. Todos são atendidos corretamente de forma concorrente.
+5. **Testes do Sistema**: Foi desenvolvido um script de testes (`tests/test_server.py`) que simula a conexão assíncrona de 10 clientes simultâneos acessando páginas diferentes. Todos são atendidos corretamente de forma concorrente.
+
+## Estrutura do Projeto
+
+```
+ServidorWeb/
+├── server.py          # Servidor HTTP multithread
+├── public/            # Paginas HTML servidas ao cliente
+│   ├── index.html
+│   └── sobre.html
+├── templates/         # Paginas de erro (servidas automaticamente)
+│   └── 404.html
+├── tests/
+│   └── test_server.py
+├── scripts/
+│   └── client.py
+└── docs/              # Documentacao do projeto
+```
 
 ## Como Executar
 
@@ -38,6 +55,11 @@ Como o servidor entende o protocolo padrão HTTP, você pode agir como um client
 Para testar a capacidade de conexões **simultâneas** do servidor, você pode usar o cliente de testes criado. 
 Com o servidor ainda rodando no terminal inicial, abra um **novo terminal** na mesma pasta do projeto e execute:
 ```bash
-python3 client.py
+python3 tests/test_server.py
+```
+
+Para o cliente manual de carga concorrente:
+```bash
+python3 scripts/client.py
 ```
 O script iniciará imediatamente múltiplas requisições (threads) apontando para arquivos diversos do servidor, imprimindo na sua tela o status do que ele recebeu, enquanto o terminal do servidor mostrará todas as threads sendo atendidas ao mesmo tempo.
